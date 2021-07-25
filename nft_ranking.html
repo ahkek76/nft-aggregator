@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="with=evice-width, initial-scale=1.0">
+    <title>Web application</title>
+    <link rel="stylesheet" href="nft_style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" >
+<link rel="stylesheet" href="C:\Users\kek\Downloads\project\keklytic\font-awesome-4.7.0\css\font-awesome.min.css">
+
+    <script src=".\script.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.3.2/dist/chart.min.js"></script>
+
+</head>
+<body>
+    <section class="background">
+    <div class="nft">
+        <div class="nft_content">
+            <div class="nft_header">
+                <div class="header_content">
+                    <nav>
+                        <a href=""><img src="images/KEKLYTIC 1 png.png"></a>
+                        <div class="nav-links" id="navLinks">
+                            <i class="" onclick="hideMenu()"></i>
+                            <ul>
+                                <li><a href="">Dashboard</a></li>
+                                <li><a href="">Contact with us</a></li>
+                            </ul> 
+                        </div>
+                        <i class="" onclick="showMenu()"></i>
+                    </nav>
+                </div>
+            </div>
+
+            <div class="nft_chart1">
+                <div class="chart1_content" >
+                    <div class="chart1_title">
+                        <h1>Top 5 NFT being traded in USD (past 7 days)</h1>
+
+                    </div>
+                    <div class="chart1_title" onclick="handleClick()">
+                    <canvas id="chart" width="100%" height="45%" ></canvas></div>
+                </div>
+                <div class="chart1_content">
+                    <div class="chart11_title">
+                        <h1>Top 5 NFT Breakdown
+                        <br>By nft project
+                    </h1>
+
+                    </div>
+                    <div class="chart11_title_nft">
+                        <canvas id="chart2" width="250px" height="250px" ></canvas>                    </div>
+
+                    </div>
+                </div>
+                
+            </div>
+
+            
+
+            <div class="nft_table1">
+                <div class="table1">
+                    <table class="table1_content">
+                        <caption id="table_title">Top 20 NFT with highest number traded </caption>
+                        <tr id="table_header1">
+                            <th data-column="PROJECT_NAME" data-order="desc">NFT project &#9650</th>
+                            <th data-column="NUM_TRADED" data-order="desc">Traded Count &#9650</th>
+                            <th data-column="FLOOR" data-order="desc">Floor price (ETH) &#9650</th>
+                            <th data-column="CEIL" data-order="desc">Ceil price (ETH) &#9650</th>
+
+                        </tr>
+                        <tbody id="fee_table">
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+           
+
+
+        </div>
+    </div>
+    </section> 
+
+
+    
+
+        <script>
+               var url = 'https://api.flipsidecrypto.com/api/v2/queries/7b1d2f05-1896-444d-9b61-8e15806bb4c9/data/latest'
+                var url2 ='https://api.flipsidecrypto.com/api/v2/queries/1f3aaefd-11b6-4474-9388-e2a852c04945/data/latest'                
+                var url3 ='https://api.flipsidecrypto.com/api/v2/queries/6e91ef03-e99d-4130-8694-7e4f2767b800/data/latest'                
+                var url4 ='https://api.flipsidecrypto.com/api/v2/queries/f933c8fb-82c6-4f88-ab78-b3be88b4093d/data/latest'                
+                var url5 ='https://api.flipsidecrypto.com/api/v2/queries/34ac26d4-4c2e-43ef-8374-6ae5a760041f/data/latest'                
+
+                
+                async function getData(){
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    var counter = data.length;
+                    var i = 0;
+                    while (counter >0){
+                    date1.push(data[i].DT)
+                    project_name.push(data[i].PROJECT_NAME);
+                    total_sale.push(data[i].TOTAL_SALE);
+                    i++;
+                    counter--;
+                    }
+                }
+                async function getData2(){
+                    const response = await fetch(url2);
+                    const data2 = await response.json();
+                    var counter = data2.length;
+                    var i = 0;
+                    while (counter >0){
+                    project_name_2.push(data2[i].PROJECT_NAME);
+                    total_sale_2.push(data2[i].TOTAL_SALE);
+                    i++;
+                    counter--;
+                    }
+                  }
+                  async function getData3(){
+                    const response = await fetch(url3);
+                    const data2 = await response.json();
+                    var counter = data2.length;
+                    var i = 0;
+                    while (counter >0){
+                    project_name_3.push(data2[i].PROJECT_NAME);
+                    total_sale_3.push(data2[i].TOTAL_SALE);
+                    i++;
+                    counter--;
+                    }
+                  }
+                  async function getData4(){
+                    const response = await fetch(url4);
+                    const data2 = await response.json();
+                    var counter = data2.length;
+                    var i = 0;
+                    while (counter >0){
+                    project_name_4.push(data2[i].PROJECT_NAME);
+                    total_sale_4.push(data2[i].TOTAL_SALE);
+                    i++;
+                    counter--;
+                    }
+                  }
+                  async function getData5(){
+                    const response = await fetch(url5);
+                    const data2 = await response.json();
+                    var counter = data2.length;
+                    var i = 0;
+                    while (counter >0){
+                    project_name_5.push(data2[i].PROJECT_NAME);
+                    total_sale_5.push(data2[i].TOTAL_SALE);
+                    i++;
+                    counter--;
+                    }
+                  }
+             
+                var date1 = [];
+                var project_name = []
+                var total_sale = []
+                var project_name_2 = []
+                var total_sale_2 = []
+                var project_name_3 = []
+                var total_sale_3 = []
+                var project_name_4 = []
+                var total_sale_4 = []
+                var project_name_5 = []
+                var total_sale_5 = []
+              
+                chart1();
+           
+
+                async function chart1(){
+                await getData();
+                await getData2();
+                await getData3();
+                await getData4();
+                await getData5();
+                var ctx = document.getElementById('chart').getContext('2d');
+                var purple_orange_gradient = ctx.createLinearGradient(0, 0, 0, 300);
+                purple_orange_gradient.addColorStop(0, 'blue');
+                purple_orange_gradient.addColorStop(1, 'purple');
+
+                var myChart = new Chart(ctx, {
+
+                type: 'line',
+                data: {
+                    labels: date1,
+                    datasets: [{
+                        label: project_name[0],
+                        data: total_sale,
+                        backgroundColor: 'white',
+                        borderColor: 'white',
+                        borderWidth: 5,
+                        hoverBorderColor: 'white',
+                        hoverBorderWidth: 4,
+                        hidden:false,
+                        pointRadius: 3
+                    },
+                    {
+                        label: project_name_2[0],
+                        data: total_sale_2,
+                        backgroundColor: 'rgba(254, 101, 101, 1)',
+                        borderColor:'rgba(254, 101, 101, 1)',
+                        borderWidth: 5,
+                        hoverBorderColor: 'gold',
+                        hoverBorderWidth: 4,
+                        pointRadius: 3
+
+                    },
+                    {
+                        label: project_name_3[0],
+                        data: total_sale_3,
+                        backgroundColor: 'rgba(255, 255, 0, 1)',
+                        borderColor:'rgba(255, 255, 0, 1)',
+                        borderWidth: 5,
+                        hoverBorderColor: 'gold',
+                        hoverBorderWidth: 4,
+                        pointRadius: 3
+
+                    },
+                    {
+                        label: project_name_4[0],
+                        data: total_sale_4,
+                        backgroundColor: 'rgba(0, 221, 85, 1)',
+                        borderColor:'rgba(0, 221, 85, 1)',
+                        borderWidth: 5,
+                        hoverBorderColor: 'gold',
+                        hoverBorderWidth: 4,
+                        pointRadius: 3
+
+                    },
+                    {
+                        label: project_name_5[0],
+                        data: total_sale_5,
+                        backgroundColor: 'rgba(255, 26, 200, 1)',
+                        borderColor:'rgba(255, 26, 200, 1)',
+                        borderWidth: 5,
+                        hoverBorderColor: 'gold',
+                        hoverBorderWidth: 4,
+                        pointRadius: 3
+
+                    },
+                  
+                    ]},
+                options: {
+                    plugins: {
+            legend: {
+                    display:true,
+                labels: {
+                    // This more specific font property overrides the global property
+                    color: 'white',
+                    font: {
+                        size: 16,
+                        style: 'inherit',
+
+                    }
+                    
+                }
+            }
+        },
+        scales:{
+            y: {
+                display: true,
+                ticks:{ 
+                    color:'white',
+                    font:{
+                        size:16
+                    },
+                }
+            },
+            x: {
+                display: false,
+
+            }
+        }
+                }
+                }
+                );
+            }
+         
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            
+     var url11 ='https://api.flipsidecrypto.com/api/v2/queries/ad5fcade-8d83-470d-b5bc-c80560ec95bc/data/latest'                
+
+                
+        async function getData11(){
+            const response = await fetch(url11);
+            const data = await response.json();
+            var counter = data.length;
+            var i = 0;
+            while (counter >0){
+            project_name_all.push(data[i].PROJECT_NAME);
+            total_sale_all.push(data[i].TOTAL_SALE);
+            i++;
+            counter--;
+            }
+        }
+    
+    var project_name_all = [];
+    var total_sale_all = []
+
+    chart2();
+
+
+    async function chart2(){
+    await getData11(); 
+    var ctx2 = document.getElementById('chart2').getContext('2d');
+     var purple_orange_gradient = ctx2.createLinearGradient(0, 0, 0, 600);
+     purple_orange_gradient.addColorStop(0, 'red');
+     purple_orange_gradient.addColorStop(1, 'orange');
+     var red_orange_gradient = ctx2.createLinearGradient(0, 0, 0, 400);
+     red_orange_gradient.addColorStop(0, '#ABDCFF');
+     red_orange_gradient.addColorStop(1, '#0396FF');
+     var green_yellow_gradient = ctx2.createLinearGradient(0, 0, 0, 400);
+     green_yellow_gradient.addColorStop(0, '#FEB692');
+     green_yellow_gradient.addColorStop(1, '#EA5455');
+     
+
+    var myChart2 = new Chart(ctx2, {
+    type: 'doughnut',
+    data: {
+      labels: project_name_all,
+      datasets: [{
+        label: 'LP activities',
+        data: total_sale_all,
+        backgroundColor: [green_yellow_gradient, 
+        red_orange_gradient,purple_orange_gradient, 'rgba(255, 26, 200, 1)'
+    ,'rgba(242, 255, 0, 1)' ],
+        borderColor: 'gold',
+        borderWidth: 4,
+        hoverBorderColor: 'red',
+        hoverBorderWidth: 4,
+      }]
+    },
+    options: {
+        plugins: {
+            legend: {
+                display:false,
+                position: 'right',
+                labels: {
+                    // This more specific font property overrides the global property
+                    color: 'white',
+                    font: {
+                        size: 15
+                    }
+                }
+            }
+            
+        },
+        cutout: 80,
+        responsive: false,
+        
+    }
+  });
+    }
+     
+  
+
+
+           var url14 ='https://api.flipsidecrypto.com/api/v2/queries/e76e9c27-c84c-4d1f-b8e9-a0a103c5b53d/data/latest'                
+   
+            async function getData14(){
+                const response = await fetch(url14);
+                const data = await response.json();
+                myArray = data;
+                var counter = data.length;
+                var i = 0;
+                var table = document.getElementById('fee_table')
+                table.innerHTML = ''
+                for( var i = 0; i <data.length;i++){
+                    var row = `<tr>
+                                    <td>${data[i].PROJECT_NAME}</td>
+                                    <td>${data[i].NUM_TRADED}</td>
+                                    <td>${data[i].FLOOR}</td>
+                                    <td>${data[i].CEIL}</td>
+                                    <tr>`
+                
+                    table.innerHTML += row;
+             }
+
+            }
+           
+            var myArray = [];
+            getData14();
+
+            $('#table_header1 th').on('click', function(){
+                var column = $(this).data('column')
+                var order = $(this).data('order')
+                var text = $(this).html()
+                text = text.substring(0, text.length - 1)
+
+                if(order == "desc"){
+                    $(this).data('order', "asc")
+                    myArray = myArray.sort((a,b) => a[column] > b[column] ? 1: -1)
+                    text += '&#9660'
+                }else{
+                    $(this).data('order', "desc")
+                    myArray = myArray.sort((a,b) => a[column] < b[column] ? 1: -1)
+                    text += '&#9650'
+                }
+                $(this).html(text)
+                var table = document.getElementById('fee_table')
+                table.innerHTML = '';
+                for( var i = 0; i <myArray.length;i++){
+                    var row = `<tr>
+                                    <td>${myArray[i].PROJECT_NAME}</td>
+                                    <td>${myArray[i].NUM_TRADED}</td>
+                                    <td>${myArray[i].FLOOR}</td>
+                                    <td>${myArray[i].CEIL}</td>
+                                    <tr>`
+                
+                    table.innerHTML += row;
+             }
+         }) 
+
+
+
+          
+
+               
+            </script>
+
+            
+
+<!------------total-value-sushi-commited-------->
+<script>
+  
+  
+
+     
+  
+     
+  
+  
+ </script>
+    
+
+    
+
+<!------------miso_total_user_commited-------->
+<script>
+  
+     
+ </script>
+    
+        
+</section>
+
+
+
+<!--------------past-miso-sale---------------->
+
+    
+
+<!------------sake333 SALES-------->
+        <script>
+              
+               
+            </script>
+
+            
+
+<!------------total-value-sushi-commited-------->
+<script>
+  
+    
+
+
+
+     
+  
+     
+ 
+     
+  
+     
+
+    
+ </script>
+    
+        
+
+
+
+
+
+<!-----------footer00----------->
+
+    <section class="footer">
+        <h2>About us</h2>
+        <h4>Nft ranking dashboard
+            <br>All nft project that is traded on opensea or rarible is included (This is not full version)
+        </h4>
+        <div>
+    </div>
+        <div class="icons">
+            <a href=""><i class="fa fa-twitter"></i></a>
+            <i class="fa fa-facebook"></i>
+    
+        </div>
+    
+    </section>
+
+<!----------Java_for_toggle_menu_---------->
+    <script>
+        var navLinks = document.getElementById("navLinks");
+
+        function showMenu(){
+            navLinks.style.right = "0";
+        }
+        function hideMenu(){
+            navLinks.style.right = "-200px";
+        }
+    </script>
+
+</body>
+</html>
